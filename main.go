@@ -7,15 +7,10 @@ import (
 	"io"
 	"log"
 	"os"
-	"strings"
 )
 
 func printResult(w io.Writer, res string) {
 	fmt.Fprintf(w, res)
-}
-
-func newDictionary(dict string) io.Reader {
-	return strings.NewReader(dict)
 }
 
 func openDictionary(dictName string) (io.Reader, error) {

@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"strings"
 	"testing"
 )
 
@@ -154,4 +155,9 @@ func TestQuery(t *testing.T) {
 	if got != want {
 		t.Fatalf("query() want=%s, but got=%s", want, got)
 	}
+}
+
+// Helper function for making mock dictionary.
+func newDictionary(dict string) io.Reader {
+	return strings.NewReader(dict)
 }
