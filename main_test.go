@@ -142,7 +142,7 @@ func TestQuery(t *testing.T) {
 	dict := newDictionary(dictSrc)
 
 	word := "zonal"
-	want := word
+	want := "地帯の"
 	got := query(word, dict)
 	if got != want {
 		t.Fatalf("query() want=%s, but got=%s", want, got)

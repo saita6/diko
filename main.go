@@ -21,6 +21,7 @@ func query(word string, dict io.Reader) (res string) {
 
 	for s.Scan() {
 		if s.Text() == word {
+			s.Scan() // Skip matched word line. Next line has the meaning.
 			return s.Text()
 		}
 	}
