@@ -40,12 +40,21 @@ func query(word string, dict io.Reader) (res string) {
 }
 
 func main() {
+	const (
+		ValidArgLen  = 2
+		QueryWordPos = 1
+	)
+	if len(os.Args) != ValidArgLen {
+		log.Fatalf("diko take only 1 argument. It's a query word.")
+	}
+	word := os.Args[QueryWordPos]
+
 	file, err := openDictionary(os.Getenv("DIKODICT")) // DICODICT stores location of dicionary source file (path).
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	var buf bytes.Buffer
-	printResult(&buf, query("zonal", file))
-	fmt.Printf(buf.String())
+	printResult(&buf, query(word, file))
+	fmt.Printf("%v\n", buf.String())
 }
