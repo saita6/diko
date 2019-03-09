@@ -136,3 +136,21 @@ func TestNewDictionary(t *testing.T) {
 		t.Fatalf("test newDictionary() want=%s, but not get", want)
 	}
 }
+
+func TestQuery(t *testing.T) {
+	dict := dictionarySample
+
+	word := "zonal"
+	want := word
+	got := query(word, dict)
+	if got != want {
+		t.Fatalf("query() want=%s, but got=%s", want, got)
+	}
+
+	word = "abc"
+	want = "NotFound"
+	got = query(word, dict)
+	if got != want {
+		t.Fatalf("query() want=%s, but got=%s", want, got)
+	}
+}

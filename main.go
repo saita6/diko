@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"io"
@@ -13,6 +14,19 @@ func printResult(w io.Writer, res string) {
 
 func newDictionary(dict string) io.Reader {
 	return strings.NewReader(dict)
+}
+
+func query(word string, dict string) (res string) {
+	r := newDictionary(dict)
+	s := bufio.NewScanner(r)
+
+	for s.Scan() {
+		if s.Text() == word {
+			return s.Text()
+		}
+	}
+
+	return "NotFound"
 }
 
 func main() {
