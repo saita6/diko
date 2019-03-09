@@ -5,6 +5,8 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
+	"os"
 	"strings"
 )
 
@@ -14,6 +16,14 @@ func printResult(w io.Writer, res string) {
 
 func newDictionary(dict string) io.Reader {
 	return strings.NewReader(dict)
+}
+
+func openDictionary(dictName string) (io.Reader, error) {
+	file, err := os.Open(dictName)
+	if err != nil {
+		return nil, fmt.Errorf("openDictionary() failed opening dictionary file, %v", err)
+	}
+	return file, nil
 }
 
 func query(word string, dict io.Reader) (res string) {
@@ -30,6 +40,12 @@ func query(word string, dict io.Reader) (res string) {
 }
 
 func main() {
+	file, err := openDictionary(os.Getenv("DIKODICT")) // DICODICT stores location of dicionary source file (path).
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	var buf bytes.Buffer
-	printResult(&buf, "diko is renewal, dictionary tool dico")
+	printResult(&buf, query("zonal", file))
+	fmt.Printf(buf.String())
 }
