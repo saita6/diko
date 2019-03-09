@@ -16,9 +16,8 @@ func newDictionary(dict string) io.Reader {
 	return strings.NewReader(dict)
 }
 
-func query(word string, dict string) (res string) {
-	r := newDictionary(dict)
-	s := bufio.NewScanner(r)
+func query(word string, dict io.Reader) (res string) {
+	s := bufio.NewScanner(dict)
 
 	for s.Scan() {
 		if s.Text() == word {

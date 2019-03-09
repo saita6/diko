@@ -138,7 +138,8 @@ func TestNewDictionary(t *testing.T) {
 }
 
 func TestQuery(t *testing.T) {
-	dict := dictionarySample
+	dictSrc := dictionarySample
+	dict := newDictionary(dictSrc)
 
 	word := "zonal"
 	want := word
