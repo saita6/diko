@@ -6,11 +6,11 @@ import (
 	"io"
 )
 
-func printResult(w io.Writer) {
-	fmt.Fprintf(w, "diko is renewal, dictionary tool dico")
+func printResult(w io.Writer, res string) {
+	fmt.Fprintf(w, res)
 }
 
 func main() {
 	var buf bytes.Buffer
-	printResult(&buf)
+	printResult(&buf, "diko is renewal, dictionary tool dico")
 }
