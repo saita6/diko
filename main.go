@@ -4,10 +4,15 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"strings"
 )
 
 func printResult(w io.Writer, res string) {
 	fmt.Fprintf(w, res)
+}
+
+func newDictionary(dict string) io.Reader {
+	return strings.NewReader(dict)
 }
 
 func main() {

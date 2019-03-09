@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"testing"
 )
@@ -103,4 +104,35 @@ func TestPrintResult(t *testing.T) {
 		t.Fatalf("printResult() want=%s, got=%s", want, got)
 	}
 
+}
+
+func TestNewDictionary(t *testing.T) {
+	r := newDictionary(dictionarySample)
+	s := bufio.NewScanner(r)
+
+	want := "zonal" // 'zonal' exist on the sample dictionary.
+	got := false
+	for s.Scan() {
+		if s.Text() == want {
+			got = true
+			break
+		}
+	}
+
+	if got != true {
+		t.Fatalf("test newDictionary() want=%s, but not get", want)
+	}
+
+	want = "abc" // 'abc' don't exist on the sample dictionary
+	got = false
+	for s.Scan() {
+		if s.Text() == want {
+			got = true
+			break
+		}
+	}
+
+	if got != false {
+		t.Fatalf("test newDictionary() want=%s, but not get", want)
+	}
 }
