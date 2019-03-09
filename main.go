@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"bytes"
+	"fmt"
+	"io"
+)
+
+func printResult(w io.Writer) {
+	fmt.Fprintf(w, "diko is renewal, dictionary tool dico")
+}
 
 func main() {
-	fmt.Println("diko is renewal, dictionary tool dico")
+	var buf bytes.Buffer
+	printResult(&buf)
 }
