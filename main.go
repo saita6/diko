@@ -59,7 +59,7 @@ func addWordToSrc(word string, meaning string, dictName string) {
 }
 
 func main() {
-	var AddWordMode *bool = flag.Bool("a", false, "mode: add new word & meaning")
+	var AddWordMode *bool = flag.Bool("a", false, "mode: add new 'word:meaning'")
 	flag.Parse()
 
 	if *AddWordMode {
