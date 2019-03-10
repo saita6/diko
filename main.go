@@ -58,29 +58,33 @@ func addWordToSrc(word string, meaning string, dictName string) {
 	}
 }
 
+func addNewWord() {
+	const (
+		ValidArgLen    = 1
+		ArgPos         = 0
+		WordMeaningSep = ":"
+		WordPos        = 0
+		MeaningPos     = 1
+	)
+
+	args := flag.Args()
+	if len(args) != ValidArgLen {
+		log.Fatalf("diko, -a option needs a word & meaning pair")
+	}
+
+	arg := strings.Split(args[ArgPos], WordMeaningSep)
+	word := arg[WordPos]
+	meaning := arg[MeaningPos]
+
+	addWordToSrc(word, meaning, os.Getenv("DIKODICT"))
+}
+
 func main() {
 	var AddWordMode *bool = flag.Bool("a", false, "mode: add new 'word:meaning'")
 	flag.Parse()
 
 	if *AddWordMode {
-		const (
-			ValidArgLen    = 1
-			ArgPos         = 0
-			WordMeaningSep = ":"
-			WordPos        = 0
-			MeaningPos     = 1
-		)
-
-		args := flag.Args()
-		if len(args) != ValidArgLen {
-			log.Fatalf("diko, -a option needs a word & meaning pair")
-		}
-
-		arg := strings.Split(args[ArgPos], WordMeaningSep)
-		word := arg[WordPos]
-		meaning := arg[MeaningPos]
-
-		addWordToSrc(word, meaning, os.Getenv("DIKODICT"))
+		addNewWord()
 		return
 	}
 
