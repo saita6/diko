@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -50,7 +51,54 @@ func addWord(word string, meaning string, dict string) string {
 	return builder.String()
 }
 
+// addWordToSrc adds a new word/meaning pair to a specified source file of dictionary.
+func addWordToSrc(word string, meaning string, dictName string) {
+	file, err := os.OpenFile(dictName, os.O_WRONLY|os.O_APPEND, os.ModeAppend)
+	if err != nil {
+		log.Fatalf("addWord() failed at adding new word, %v", err)
+	}
+	defer file.Close()
+
+	if _, err := file.WriteString(word); err != nil {
+		log.Fatalf("addWordToSrc() failed %v, word=%v", err, word)
+	}
+	if _, err := file.Write([]byte{'\n'}); err != nil {
+		log.Fatalf("addWordToSrc() failed at adding new line '\n' %v", err)
+	}
+	if _, err := file.WriteString(meaning); err != nil {
+		log.Fatalf("addWordToSrc() failed %v, meaning=%v", err, meaning)
+	}
+	if _, err := file.Write([]byte{'\n'}); err != nil {
+		log.Fatalf("addWordToSrc() failed at adding new line '\n' %v", err)
+	}
+}
+
 func main() {
+	var AddWordMode *bool = flag.Bool("a", false, "mode: add new word & meaning")
+	flag.Parse()
+
+	if *AddWordMode {
+		const (
+			ValidArgLen    = 1
+			ArgPos         = 0
+			WordMeaningSep = ":"
+			WordPos        = 0
+			MeaningPos     = 1
+		)
+
+		args := flag.Args()
+		if len(args) != ValidArgLen {
+			log.Fatalf("diko, -a option needs a word & meaning pair")
+		}
+
+		arg := strings.Split(args[ArgPos], WordMeaningSep)
+		word := arg[WordPos]
+		meaning := arg[MeaningPos]
+
+		addWordToSrc(word, meaning, os.Getenv("DIKODICT"))
+		return
+	}
+
 	const (
 		ValidArgLen  = 2
 		QueryWordPos = 1
