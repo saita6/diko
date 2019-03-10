@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"io"
 	"strings"
 	"testing"
 )
@@ -160,4 +161,19 @@ func TestQuery(t *testing.T) {
 // Helper function for making mock dictionary.
 func newDictionary(dict string) io.Reader {
 	return strings.NewReader(dict)
+}
+
+func TestAddWord(t *testing.T) {
+	word := "diko"
+	meaning := "辞書ツール"
+	dictSrc := dictionarySample
+
+	dictSrc = addWord(word, meaning, dictSrc)
+
+	dict := newDictionary(dictSrc)
+	got := query(word, dict)
+	want := meaning
+	if got != want {
+		t.Fatalf("addWord() failed, want=%v, but got=%v, dictSrc=%v", want, got, dictSrc)
+	}
 }

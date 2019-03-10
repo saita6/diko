@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 )
 
 func printResult(w io.Writer, res string) {
@@ -32,6 +33,21 @@ func query(word string, dict io.Reader) (res string) {
 	}
 
 	return "NotFound"
+}
+
+// addWord add a new word/meaning pair to a specified source of dictionary.
+func addWord(word string, meaning string, dict string) string {
+	var builder strings.Builder
+	if _, err := builder.WriteString(word); err != nil {
+		log.Fatalf("addWord() failed %v, word=%v", err, word)
+	}
+	if _, err := builder.WriteRune('\n'); err != nil {
+		log.Fatalf("addWord() failed at adding new line '\n' %v", err)
+	}
+	if _, err := builder.WriteString(meaning); err != nil {
+		log.Fatalf("addWord() failed %v, meaning=%v", err, meaning)
+	}
+	return builder.String()
 }
 
 func main() {
