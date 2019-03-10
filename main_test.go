@@ -177,3 +177,19 @@ func TestAddWord(t *testing.T) {
 		t.Fatalf("addWord() failed, want=%v, but got=%v, dictSrc=%v", want, got, dictSrc)
 	}
 }
+
+// Helper function
+// addWord add a new word/meaning pair to a specified source of dictionary.
+func addWord(word string, meaning string, dict string) string {
+	var builder strings.Builder
+	if _, err := builder.WriteString(word); err != nil {
+		log.Fatalf("addWord() failed %v, word=%v", err, word)
+	}
+	if _, err := builder.WriteRune('\n'); err != nil {
+		log.Fatalf("addWord() failed at adding new line '\n' %v", err)
+	}
+	if _, err := builder.WriteString(meaning); err != nil {
+		log.Fatalf("addWord() failed %v, meaning=%v", err, meaning)
+	}
+	return builder.String()
+}
