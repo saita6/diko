@@ -44,17 +44,13 @@ func addWordToSrc(word string, meaning string, dictName string) {
 	}
 	defer file.Close()
 
-	if _, err := file.WriteString(word); err != nil {
-		log.Fatalf("addWordToSrc() failed %v, word=%v", err, word)
-	}
-	if _, err := file.Write([]byte{'\n'}); err != nil {
-		log.Fatalf("addWordToSrc() failed at adding new line '\n' %v", err)
-	}
-	if _, err := file.WriteString(meaning); err != nil {
-		log.Fatalf("addWordToSrc() failed %v, meaning=%v", err, meaning)
-	}
-	if _, err := file.Write([]byte{'\n'}); err != nil {
-		log.Fatalf("addWordToSrc() failed at adding new line '\n' %v", err)
+	for _, line := range []string{word, meaning} {
+		if _, err := file.WriteString(line); err != nil {
+			log.Fatalf("addWordToSrc() failed %v, line=%v", err, line)
+		}
+		if _, err := file.Write([]byte{'\n'}); err != nil {
+			log.Fatalf("addWordToSrc() failed at adding new line '\n' %v", err)
+		}
 	}
 }
 
