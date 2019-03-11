@@ -12,7 +12,11 @@ import (
 )
 
 func printResult(w io.Writer, res string) {
-	fmt.Fprintf(w, res)
+	if res == "NotFound" {
+		fmt.Fprintf(w, "[%v]", res)
+	} else {
+		fmt.Fprintf(w, "[%v] %v", "MATCHED", res)
+	}
 }
 
 func openDictionary(dictName string) (io.Reader, error) {

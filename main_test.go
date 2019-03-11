@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"io"
+	"log"
 	"strings"
 	"testing"
 )
@@ -96,16 +97,27 @@ zoology
 `
 
 func TestPrintResult(t *testing.T) {
+	const resultTemp string = "[%v]%v\n"
 	var buf bytes.Buffer
 
-	want := dictionarySample
-	printResult(&buf, want)
-
-	got := buf.String()
-	if got != want {
-		t.Fatalf("printResult() want=%s, got=%s", want, got)
+	type result struct {
+		testcase string
+		status   string
+		want     string
+	}
+	testCases := []result{
+		{"city", "MATCHED", "[MATCHED] city"},
+		{"NotFound", "NotFound", "[NotFound]"},
 	}
 
+	for _, tCase := range testCases {
+		printResult(&buf, tCase.testcase)
+		got := buf.String()
+		if got != tCase.want {
+			t.Fatalf("printResult() want=%x, got=%x", tCase.want, got)
+		}
+		buf.Reset()
+	}
 }
 
 func TestNewDictionary(t *testing.T) {
